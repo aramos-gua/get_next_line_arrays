@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 char	*get_next_line(int fd);
 #endif

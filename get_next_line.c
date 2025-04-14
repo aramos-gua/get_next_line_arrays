@@ -14,7 +14,11 @@
 
 char	*get_next_line(int fd)
 {
-	
+	char	line[BUFFER_SIZE + 1];
+
+	read(fd, line, BUFFER_SIZE);
+	printf("%s", line);
+	return (line);
 }
 
 int	main(void)
