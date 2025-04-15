@@ -6,7 +6,7 @@
 /*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:32:37 by Alejandro Ram     #+#    #+#             */
-/*   Updated: 2025/04/15 17:54:37 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/15 22:14:30 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	}
 	if (c == '\0')
-		return ((char)s);
+		return ((char *)s);
 	return (NULL);
 }
 
@@ -76,7 +76,10 @@ char	*ft_strdup(const char *s)
 	if (!ptr)
 		return (NULL);
 	while (s[i])
-		ptr[i] = s[i++];
+	{
+		ptr[i] = s[i];
+		i++;
+	}
 	ptr[i] = '\0';
 	return (ptr);
 }
@@ -95,7 +98,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s3)
 		return (NULL);
 	while (s1[i])
-		s3[i] = s1[i++];
+	{
+		s3[i] = s1[i];
+		i++;
+	}
 	while (s2[j])
 		s3[i++] = s2[j++];
 	s3[i] = '\0';
