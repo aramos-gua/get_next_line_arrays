@@ -56,7 +56,15 @@ char	*get_next_line(int fd)
 	
 	line_to_return = NULL;
 	if (ft_strlen(buffer, '\0') > 0)
+	{
 		line_to_return = ft_strdup(buffer);
+		if (ft_strchr(line_to_return, '\n'))
+		{
+			divide(buffer, &line_to_return);
+			return (line_to_return);
+		}
+	}
+	while ()
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 		return (NULL);
