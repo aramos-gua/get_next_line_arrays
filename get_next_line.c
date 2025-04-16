@@ -41,27 +41,33 @@ void	divide(char	*buffer, char *leftover, char **line_to_return)
 	line_ptr = ft_strchr(buffer, '\n');
 	if (!line_ptr)
 		return ;
-	line_len = line_ptr - buffer + 1;
-	leftover_len = ft_strlen(line_ptr + 1);
+	line_len = ft_strlen(buffer, '\n') + 1;
+	leftover_len = ft_strlen(buffer, '\0') - line_len;
 	*line_to_return = ft_substr(buffer, 0, line_len);
-	leftover = ft_memmove(leftover, line_ptr + 1, leftover_len);
+	leftover = ft_memmove(buffer, line_ptr + 1, leftover_len);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	leftover[BUFFER_SIZE + 1];
+	static char	*leftover = NULL;
 	char		buffer[BUFFER_SIZE + 1];
 	char		*line_to_return;
 	int			bytes_read;
 	
 	line_to_return = NULL;
-	if (ft_strlen(leftover) > 0)
+	if (ft_strlen(leftover, '\0') > 0)
 	{
-		ft_memmove(buffer, leftover, ft_strlen(leftover));
-		bytes_read = read(fd, buffer + ft_strlen(leftover), BUFFER_SIZE);
+		//printf("Beginning of if\n");
+		ft_memmove(buffer, leftover, ft_strlen(leftover, '\0'));
+		bytes_read = read(fd, buffer + ft_strlen(leftover, '\0'), BUFFER_SIZE);
+		//printf("End of if\n");
 	}
 	else
+	{
+		//printf("Beginning of else\n");
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		//printf("Enf of else\n");
+	}
 	if (bytes_read <= 0)
 		return (NULL);
 	buffer[bytes_read] = '\0';
