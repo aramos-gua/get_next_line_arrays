@@ -44,7 +44,7 @@ void	divide(char	*buffer, char **line_to_return)
 	line_len = ft_strlen(buffer, '\n') + 1;
 	leftover_len = ft_strlen(buffer, '\0') - line_len;
 	*line_to_return = ft_substr(buffer, 0, line_len);
-	buffer = ft_memmove(buffer, line_ptr + 1, leftover_len);
+	ft_memmove(buffer, line_ptr + 1, leftover_len);
 	buffer[leftover_len] = '\0';
 }
 
@@ -56,18 +56,8 @@ char	*get_next_line(int fd)
 	
 	line_to_return = NULL;
 	if (ft_strlen(buffer, '\0') > 0)
-	{
-		//printf("Beginning of if\n");
-		//ft_memmove(buffer, leftover, ft_strlen(leftover, '\0'));
-		bytes_read = read(fd, buffer + ft_strlen(leftover, '\0'), BUFFER_SIZE);
-		//printf("End of if\n");
-	}
-	else
-	{
-		//printf("Beginning of else\n");
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		//printf("Enf of else\n");
-	}
+		line_to_return = ft_strdup(buffer);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 		return (NULL);
 	buffer[bytes_read] = '\0';
