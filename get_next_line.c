@@ -82,6 +82,8 @@ char	*get_next_line(int fd)
 	char		*line_to_return;
 	int			bytes_read;
 	
+	if (fd < 0)
+		return (NULL);
 	line_to_return = NULL;
 	bytes_read = 1;
 	if (ft_strlen(buffer, '\0') > 0)
@@ -94,6 +96,7 @@ char	*get_next_line(int fd)
 	while (!(ft_strchr(buffer, '\n') && bytes_read > 0))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[bytes_read] = '\0';
 		if ((bytes_read == 0 || bytes_read < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
 		{
 			pass_buffer_data(buffer, &line_to_return);
@@ -107,24 +110,25 @@ char	*get_next_line(int fd)
 		else
 			pass_buffer_data(buffer, &line_to_return);
 	}
-	if (!line_to_return)
+	if (!line_to_return || line_to_return[0] == '\0')
+	{
+		free(line_to_return);
 		return (NULL);
+	}
 	return (line_to_return);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int	n = 6;
-
-	fd = open("a.txt", O_RDONLY);
-	while (n -- > 0)
-	{
-		line = get_next_line(fd);
-		printf("%s\n", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
+//int	main(void)
+//{
+//	int		fd;
+//	char	*line;
+//
+//	fd = open("a.txt", O_RDONLY);
+//	while ((line = get_next_line(fd)) != NULL)
+//	{
+//		printf("%s", line);
+//		free(line);
+//	}
+//	close(fd);
+//	return (0);
+//}
