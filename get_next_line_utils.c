@@ -64,26 +64,31 @@ size_t	ft_strlen(const char *str, char c)
 	return (i);
 }
 
-char	*ft_strdup(const char *s)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*ptr;
-	int		len;
-	int		i;
+	unsigned char		*destination;
+	const unsigned char	*source;
+	size_t				i;
 
+	if (!dest || !src || dest == src || n == 0)
+		return (dest);
+	destination = (unsigned char *)dest;
+	source = (const unsigned char *)src;
 	i = 0;
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s, '\0') + 1;
-	ptr = (char *)malloc(len * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	while (s[i])
+	if (source < destination && destination <= source + (n - 1))
 	{
-		ptr[i] = s[i];
-		i++;
+		while (n-- > 0)
+			destination[n] = source[n];
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	else
+	{
+		while (i < n)
+		{
+			destination[i] = source[i];
+			i++;
+		}
+	}
+	return (dest);
 }
 
 char	*gnl_strjoin(char *s1, char *s2)

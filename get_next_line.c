@@ -12,33 +12,6 @@
 
 #include "get_next_line.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	unsigned char		*destination;
-	const unsigned char	*source;
-	size_t				i;
-
-	if (!dest || !src || dest == src || n == 0)
-		return (dest);
-	destination = (unsigned char *)dest;
-	source = (const unsigned char *)src;
-	i = 0;
-	if (source < destination && destination <= source + (n - 1))
-	{
-		while (n-- > 0)
-			destination[n] = source[n];
-	}
-	else
-	{
-		while (i < n)
-		{
-			destination[i] = source[i];
-			i++;
-		}
-	}
-	return (dest);
-}
-
 void	divide(char	*buffer, char **line_to_return)
 {
 	char	*line_ptr;
