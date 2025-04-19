@@ -70,36 +70,30 @@ void	divide(char	*buffer, char **line_to_return)
 	buffer[leftover_len] = '\0';
 }
 
-static void	pass_buffer_data(char *buffer, char **line_to_return)
-{
-	*line_to_return = gnl_strjoin(*line_to_return, buffer);
-	buffer[0] = '\0';
-}
-
 char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*line_to_return;
-	int			bytes_read;
-	
-	if (fd < 0)
+	int			bytes;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line_to_return = NULL;
-	bytes_read = 1;
+	bytes = 1;
 	if (ft_strlen(buffer, '\0') > 0)
 	{
 		if (ft_strchr(buffer, '\n'))
-			return(divide(buffer, &line_to_return), line_to_return);
+			return (divide(buffer, &line_to_return), line_to_return);
 		else
-			pass_buffer_data(buffer, &line_to_return);
+			line_to_return = gnl_strjoin(line_to_return, buffer);
 	}
-	while (!(ft_strchr(buffer, '\n') && bytes_read > 0))
+	while (!(ft_strchr(buffer, '\n') && bytes > 0))
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		buffer[bytes_read] = '\0';
-		if ((bytes_read == 0 || bytes_read < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		buffer[bytes] = '\0';
+		if ((bytes == 0 || bytes < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
 		{
-			pass_buffer_data(buffer, &line_to_return);
+			line_to_return = gnl_strjoin(line_to_return, buffer);
 			break ;
 		}
 		if (ft_strchr(buffer, '\n'))
@@ -108,13 +102,10 @@ char	*get_next_line(int fd)
 			break ;
 		}
 		else
-			pass_buffer_data(buffer, &line_to_return);
+			line_to_return = gnl_strjoin(line_to_return, buffer);
 	}
 	if (!line_to_return || line_to_return[0] == '\0')
-	{
-		free(line_to_return);
-		return (NULL);
-	}
+		return (free(line_to_return), NULL);
 	return (line_to_return);
 }
 

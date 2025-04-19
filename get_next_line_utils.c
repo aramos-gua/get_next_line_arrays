@@ -94,7 +94,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 
 	if (s1)
 		len1 = ft_strlen(s1, '\0');
-	else 
+	else
 		len1 = 0;
 	len2 = ft_strlen(s2, '\0');
 	s3 = malloc(len1 + len2 + 1);
@@ -106,5 +106,6 @@ char	*gnl_strjoin(char *s1, char *s2)
 	s3[len1 + len2] = '\0';
 	if (s1)
 		free(s1);
+	s2[0] = '\0';
 	return (s3);
 }
