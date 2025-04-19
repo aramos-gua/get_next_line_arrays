@@ -48,30 +48,21 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line_to_return = NULL;
-	bytes = 1;
 	if (ft_strlen(buffer, '\0') > 0)
 	{
 		if (ft_strchr(buffer, '\n'))
 			return (divide(buffer, &line_to_return), line_to_return);
-		else
-			line_to_return = gnl_strjoin(line_to_return, buffer);
+		line_to_return = gnl_strjoin(line_to_return, buffer);
 	}
-	while (!(ft_strchr(buffer, '\n') && bytes > 0))
+	while (1)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes <= 0)
+			break ;
 		buffer[bytes] = '\0';
 		if (ft_strchr(buffer, '\n'))
-		{
-			divide(buffer, &line_to_return);
-			break ;
-		}
-		if ((bytes == 0 || bytes < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
-		{
-			line_to_return = gnl_strjoin(line_to_return, buffer);
-			break ;
-		}
-		if (!(ft_strchr(buffer, '\n')))
-			line_to_return = gnl_strjoin(line_to_return, buffer);
+			return (divide(buffer, &line_to_return), line_to_return);
+		line_to_return = gnl_strjoin(line_to_return, buffer);
 	}
 	if (!line_to_return || line_to_return[0] == '\0')
 		return (free(line_to_return), NULL);
