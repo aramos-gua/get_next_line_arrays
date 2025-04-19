@@ -91,17 +91,17 @@ char	*get_next_line(int fd)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes] = '\0';
-		if ((bytes == 0 || bytes < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
-		{
-			line_to_return = gnl_strjoin(line_to_return, buffer);
-			break ;
-		}
 		if (ft_strchr(buffer, '\n'))
 		{
 			divide(buffer, &line_to_return);
 			break ;
 		}
-		else
+		if ((bytes == 0 || bytes < BUFFER_SIZE) && !ft_strchr(buffer, '\n'))
+		{
+			line_to_return = gnl_strjoin(line_to_return, buffer);
+			break ;
+		}
+		if (!(ft_strchr(buffer, '\n')))
 			line_to_return = gnl_strjoin(line_to_return, buffer);
 	}
 	if (!line_to_return || line_to_return[0] == '\0')
