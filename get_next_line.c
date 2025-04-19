@@ -43,7 +43,6 @@ void	divide(char	*buffer, char **line_to_return)
 {
 	char	*line_ptr;
 	char	*temp;
-	char	*joined;
 	size_t	line_len;
 	size_t	leftover_len;
 
@@ -56,10 +55,7 @@ void	divide(char	*buffer, char **line_to_return)
 	if (!temp)
 		return ;
 	if (*line_to_return)
-	{
-		joined = gnl_strjoin(*line_to_return, temp);
-		*line_to_return = joined;
-	}
+		*line_to_return = gnl_strjoin(*line_to_return, temp);
 	else
 	{
 		*line_to_return = temp;
