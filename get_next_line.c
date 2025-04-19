@@ -48,12 +48,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line_to_return = NULL;
-	if (ft_strlen(buffer, '\0') > 0)
-	{
-		if (ft_strchr(buffer, '\n'))
-			return (divide(buffer, &line_to_return), line_to_return);
+	if (ft_strlen(buffer, '\0') > 0 && ft_strchr(buffer, '\n'))
+		return (divide(buffer, &line_to_return), line_to_return);
+	else if (ft_strlen(buffer, '\0') > 0 && !ft_strchr(buffer, '\n'))
 		line_to_return = gnl_strjoin(line_to_return, buffer);
-	}
 	while (1)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
@@ -68,18 +66,3 @@ char	*get_next_line(int fd)
 		return (free(line_to_return), NULL);
 	return (line_to_return);
 }
-
-//int	main(void)
-//{
-//	int		fd;
-//	char	*line;
-//
-//	fd = open("a.txt", O_RDONLY);
-//	while ((line = get_next_line(fd)) != NULL)
-//	{
-//		printf("%s", line);
-//		free(line);
-//	}
-//	close(fd);
-//	return (0);
-//}
