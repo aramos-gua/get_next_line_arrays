@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "get_next_line_bonus.h"
+#include <stdio.h>
 
 int	main(void)
 {
@@ -10,7 +11,7 @@ int	main(void)
 	char	*line2;
 
 	fd = open("get_next_line.c", O_RDONLY);
-	fd2 = open("get_next_line.c", O_RDONLY);
+	fd2 = open("get_next_line_bonus.c", O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);
